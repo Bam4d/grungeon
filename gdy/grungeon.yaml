@@ -15,17 +15,17 @@ Environment:
 
   Levels:
     - |
-      w  w  w  w  w  w  w  w  w  w  w  w  w  w  w
-      w  .  .  .  .  .  .  .  .  .  .  .  .  .  w
-      w  .  .  .  .  x  .  X  X  .  .  .  .  .  w
-      w  .  .  .  .  .  .  X  X  .  .  x  .  .  w
-      w  .  .  .  .  .  .  .  .  .  .  .  .  .  w
-      w  .  X  .  .  .  .  .  .  .  .  .  .  .  w
-      w  .  .  .  .  .  .  .  .  .  .  x  .  .  w
-      w  .  .  .  .  .  .  .  .  .  .  .  .  .  w
-      w  .  .  .  G  .  .  .  X  .  .  .  .  .  w
-      w  .  .  .  .  .  .  .  .  .  .  .  .  .  w
-      w  w  w  w  w  w  w  w  w  w  w  w  w  w  w
+      w/f   w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f
+      w/f   f    f    f    f    f    f    f    f    f    f    f    f    f    w/f
+      w/f   f    f    f    f    x/f  f    X/f  X/f  f    f    f    f    f    w/f
+      w/f   f    f    f    f    f    f    X/f  X/f  f    f    x    f    f    w/f
+      w/f   f    f    f    f    f    f    f    f    f    f    f    f    f    w/f
+      w/f   f    X/f  f    f    f    f    f    f    f    f    f    f    f    w/f
+      w/f   f    f    f    f    f    f    f    f    f    x/f  f    f    f    w/f
+      w/f   f    f    f    f    f    f    f    f    f    f    f    f    f    w/f
+      w/f   f    f    f    G/f  f    f    f    X/f  f    f    f    f    f    w/f
+      w/f   f    f    f    f    f    f    f    f    f    f    f    f    f    w/f
+      w/f   w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f
       
 
 Actions:
