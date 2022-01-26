@@ -1,10 +1,11 @@
-Version:
+Version: 0.1
 Environment:
   Name: grungeon
   Description: asdf
   Observers:
     Sprite2D:
-      TileSize: 32
+      TileSize: 64
+      BackgroundTile: Flowerfloor-1.png
   Player:
     Observer:
       Height: 10
@@ -57,7 +58,7 @@ Actions:
           Object: grypto
           Commands:
             - mov: _dest
-            - set_tile: met.image_idx
+            - set_tile: meta.image_idx
         Dst:
           Object: _empty
 
@@ -69,20 +70,26 @@ Objects:
     MapCharacter: X
     Observers:
       Sprite2D:
-        - Image: assets/slime_barrel.png
+        - Image: SlimeBarrel.png
 
   - Name: barrel
     MapCharacter: x
     Observers:
       Sprite2D:
-        - Image: assets/barrel.png
+        - Image: EmptyBarrel.png
+
+  - Name: wall
+    MapCharacter: w
+    Observers:
+      Sprite2D:
+        - Image: SlimeEgg.png
 
   - Name: grypto
     MapCharacter: G
     Observers:
       Sprite2D:
-        - Image: assets/grypto_up.png
-        - Image: assets/grypto_right.png
-        - Image: assets/grypto_down.png
-        - Image: assets/grypto_left.png
+        - Image: grypto_up.png
+        - Image: grypto_right.png
+        - Image: grypto_down.png
+        - Image: grypto_left.png
 
