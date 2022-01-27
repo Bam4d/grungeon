@@ -5,6 +5,7 @@ from griddly import GymWrapperFactory, gd, GymWrapper
 # from griddly.RenderTools import VideoRecorder
 
 # todo movement is right but the sprite rotation is wrong
+# this seem to be based on pygame's event.key
 KEYWORD_TO_KEY = {
     (ord('d'), ): 1,
     (ord('w'),): 2,
@@ -43,7 +44,7 @@ if __name__ == '__main__':
     env = GymWrapper(yaml_path,
                      player_observer_type=gd.ObserverType.SPRITE_2D,
                      global_observer_type=gd.ObserverType.SPRITE_2D,
-                     image_path='../assets/',
+                     image_path='../assets_/',
                      level=0)
 
     env.reset()
