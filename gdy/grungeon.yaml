@@ -5,7 +5,7 @@ Environment:
   Observers:
     Sprite2D:
       TileSize: 64
-      BackgroundTile: Flowerfloor-1.png
+      BackgroundTile: blank.png
   Player:
     Observer:
       Height: 10
@@ -15,17 +15,17 @@ Environment:
 
   Levels:
     - |
-      w  w  w  w  w  w  w  w  w  w  w  w  w  w  w
-      w  .  .  .  .  .  .  .  .  .  .  .  .  .  w
-      w  .  .  .  .  x  .  X  X  .  .  .  .  .  w
-      w  .  .  .  .  .  .  X  X  .  .  x  .  .  w
-      w  .  .  .  .  .  .  .  .  .  .  .  .  .  w
-      w  .  X  .  .  .  .  .  .  .  .  .  .  .  w
-      w  .  .  .  .  .  .  .  .  .  .  x  .  .  w
-      w  .  .  .  .  .  .  .  .  .  .  .  .  .  w
-      w  .  .  .  G  .  .  .  X  .  .  .  .  .  w
-      w  .  .  .  .  .  .  .  .  .  .  .  .  .  w
-      w  w  w  w  w  w  w  w  w  w  w  w  w  w  w
+      w/f   w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f
+      w/f   f    f    f    f    f    f    f    f    f    f    f    f    f    w/f
+      w/f   f    f    f    f    x/f  f    X/f  X/f  f    f    f    f    f    w/f
+      w/f   f    f    f    f    f    f    X/f  X/f  f    f    x/f    f    f    w/f
+      w/f   f    f    f    f    f    f    f    f    f    f    f    f    f    w/f
+      w/f   f    X/f  f    f    f    f    f    f    f    f    f    f    f    w/f
+      w/f   f    f    f    f    f    f    f    f    f    x/f  f    f    f    w/f
+      w/f   f    f    f    f    f    f    f    f    f    f    f    f    f    w/f
+      w/f   f    f    f    G/f  f    f    f    X/f  f    f    f    f    f    w/f
+      w/f   f    f    f    f    f    f    f    f    f    f    f    f    f    w/f
+      w/f   w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f
       
 
 Actions:
@@ -60,31 +60,43 @@ Actions:
             - mov: _dest
             - set_tile: meta.image_idx
         Dst:
-          Object: _empty
+          Object: [_empty, floor]
 
 
 
 Objects:
 
   - Name: slime_barrel
+    Z: 2
     MapCharacter: X
     Observers:
       Sprite2D:
         - Image: SlimeBarrel.png
 
   - Name: barrel
+    Z: 2
     MapCharacter: x
     Observers:
       Sprite2D:
         - Image: EmptyBarrel.png
 
   - Name: wall
+    Z: 2
     MapCharacter: w
     Observers:
       Sprite2D:
         - Image: SlimeEgg.png
 
+  - Name: floor
+    Z: 0
+    MapCharacter: f
+    Observers:
+      Sprite2D:
+        - Image: floor9-0.png
+
+
   - Name: grypto
+    Z: 2
     MapCharacter: G
     Observers:
       Sprite2D:
