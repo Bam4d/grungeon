@@ -4,52 +4,83 @@ from enum import Enum
 
 import numpy as np
 
-""" SETTINGS """
-""" All dimensions in number of cells """
-
-# Dimensions of individual rooms
-ROOM_WIDTH = 8
-ROOM_HEIGHT = 8
-
-# Width of walls
-WALL_WIDTH = 1
-
-# Number of rooms
-ROOMS_HORIZONTAL = 2
-ROOMS_VERTICAL = 2
-
-""" END OF SETTINGS """
-
 
 class Tiles(str, Enum):
-    FLOOR = ' '
-    WALL = 'W'
+    FLOOR = '.'
+    WALL = 'w'
     PLAYER = 'P'
 
 
-# Calculate total dimensions
-# Total cells minus walls between rooms
-TOTAL_WIDTH = ROOMS_HORIZONTAL * ROOM_WIDTH - (ROOMS_HORIZONTAL-1) * WALL_WIDTH
-TOTAL_HEIGHT = ROOMS_VERTICAL * ROOM_HEIGHT - (ROOMS_VERTICAL-1) * WALL_WIDTH
+class Map:
+    def __init__(self, room_width=8, room_height=8, wall_width=1,
+                 num_rooms_horizontal=2, num_rooms_vertical=2):
+        """ All dimensions in numbers of cells """
 
-# Build world
-world = np.full((TOTAL_HEIGHT, TOTAL_WIDTH), f"{Tiles.FLOOR}",
-                dtype=np.str_)
+        # Dimensions of individual rooms
+        self.room_width = room_width
+        self.room_height = room_height
 
-# Draw walls
-# Outer walls
-world[0:WALL_WIDTH, :] = f"{Tiles.WALL}"   # Top
-world[(TOTAL_HEIGHT-WALL_WIDTH):TOTAL_HEIGHT, :] = f"{Tiles.WALL}"  # Bottom
-world[:, 0:WALL_WIDTH] = f"{Tiles.WALL}"   # Left
-world[:, (TOTAL_WIDTH-WALL_WIDTH):TOTAL_WIDTH] = f"{Tiles.WALL}"  # Right
-# Between rooms
-for i in range(1, ROOMS_VERTICAL):  # Horizontal dividers
-    a = i * (ROOM_HEIGHT - WALL_WIDTH)
-    b = a + WALL_WIDTH
-    world[a:b, :] = f"{Tiles.WALL}"
-for i in range(1, ROOMS_HORIZONTAL):  # Vertical dividers
-    a = i * (ROOM_WIDTH - WALL_WIDTH)
-    b = a + WALL_WIDTH
-    world[:, a:b] = f"{Tiles.WALL}"
+        # Width of walls
+        self.wall_width = wall_width
 
-print(world)
+        # Number of rooms
+        self.num_rooms_horizontal = num_rooms_horizontal
+        self.num_rooms_vertical = num_rooms_vertical
+
+        # Calculate total dimensions
+        # Total cells minus walls between rooms
+        self.map_width = (self.num_rooms_horizontal * self.room_width -
+                          (self.num_rooms_horizontal-1) * self.wall_width)
+        self.map_height = (self.num_rooms_vertical * self.room_height -
+                           (self.num_rooms_vertical-1) * self.wall_width)
+
+    def build(self):
+        # Build map
+        self.map = np.full((self.map_height, self.map_width),  # Dimensions
+                           f"{Tiles.FLOOR}",  # Fill value
+                           dtype=np.str_)
+
+        # Draw outer walls
+        self.map[0:self.wall_width, :] = f"{Tiles.WALL}"  # Top
+        self.map[(self.map_height-self.wall_width):self.map_height, :] = f"{Tiles.WALL}"  # Bottom
+        self.map[:, 0:self.wall_width] = f"{Tiles.WALL}"  # Left
+        self.map[:, (self.map_width-self.wall_width):self.map_width] = f"{Tiles.WALL}"  # Right
+
+        # Draw walls between rooms
+        for i in range(1, self.num_rooms_vertical):  # Horizontal dividers
+            a = i * (self.room_height - self.wall_width)
+            b = a + self.wall_width
+            self.map[a:b, :] = f"{Tiles.WALL}"
+        for i in range(1, self.num_rooms_horizontal):  # Vertical dividers
+            a = i * (self.room_width - self.wall_width)
+            b = a + self.wall_width
+            self.map[:, a:b] = f"{Tiles.WALL}"
+
+        return self.map
+
+    def get_map(self):
+        output = ""
+        height, width = self.map.shape
+        for i in range(height):
+            for j in range(width):
+                output += f"{self.map[i, j]}"
+                if j < width-1:
+                    output += " "  # Add space between cells
+            if i < height-1:
+                output += "\n"  # Add break between lines
+        return output
+
+    def __repr__(self):
+        return self.get_map()
+
+
+if __name__ == "__main__":
+    world = Map(
+        room_width=8,
+        room_height=8,
+        wall_width=1,
+        num_rooms_horizontal=2,
+        num_rooms_vertical=2
+    )
+    world.build()
+    print(world)
