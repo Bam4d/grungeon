@@ -22,7 +22,7 @@ Environment:
   Levels:
     - |
       w/f   w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f
-      w/f   f    f    f    f    f    f    f    f    f    f    f    f    f    w/f
+      w/f   f    f    f    f    f    f    f    f    f    f    e/f  e/f  e/f    w/f
       w/f   f    f    f    f    x/f  f    X/f  X/f  f    f    f    f    f    w/f
       w/f   f    f    f    f    f    f    X/f  X/f  f    f    x/f    f    f    w/f
       w/f   f    f    f    f    f    f    f    f    f    f    f    f    f    w/f
@@ -82,7 +82,6 @@ Actions:
           Description: slime
           VectorToDest: [ 0, -1 ]
       Relative: true
-
     Behaviours:
       - Src:
           Object: grypto
@@ -94,19 +93,24 @@ Actions:
             - change_to: barrel
 
   - Name: attack
-
     Behaviours:
       - Src:
           Object: grypto
-          Commands:
-            - spawn: slime
         Dst:
-          Object: barrel
+          Object: crawler
           Commands:
             - remove: true
 
-
-
+  - Name: hatch
+    Probability: 0.5
+    Trigger:
+      Type: RANGE_BOX_BOUNDARY
+      Range: 2
+    Behaviours:
+      - Dest:
+          Object: egg
+          Commands:
+            - change_to: crawler
 
 Objects:
 
@@ -129,6 +133,12 @@ Objects:
     Observers:
       Sprite2D:
         - Image: SlimeEgg.png
+
+  - Name: crawler
+    MapCharacter: c
+    Observers:
+      Sprite2D:
+        - Image: tg_monsters_crawler_u1.png
 
   - Name: wall
     Z: 2
