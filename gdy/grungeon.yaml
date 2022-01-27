@@ -12,6 +12,12 @@ Environment:
       Width: 10
       TrackAvatar: true
     AvatarObject: grypto
+  Variables:
+    - Name: slime_inventory
+      InitialValue: 0
+    - Name: health
+      InitialValue: 100
+
 
   Levels:
     - |
@@ -62,6 +68,17 @@ Actions:
         Dst:
           Object: _empty
 
+  - Name: acquire_slime
+    Behaviors:
+      - Src:
+          Object: grypto
+          Commands:
+            - incr: slime_inventory
+      - Dst:
+          Object: [slime_barrel]
+          Commands:
+            - change_to: barrel
+
 
 
 Objects:
@@ -78,12 +95,34 @@ Objects:
       Sprite2D:
         - Image: EmptyBarrel.png
 
-  - Name: wall
-    MapCharacter: w
+  - Name: egg
+    MapCharacter: e
     Observers:
       Sprite2D:
         - Image: SlimeEgg.png
 
+  - Name: wall
+    MapCharacter: w
+    Observers:
+      Sprite2D:
+        - TilingMode: WALL_16
+          Image:
+            - wall1-0.png
+            - wall1-1.png
+            - wall1-2.png
+            - wall1-3.png
+            - wall1-4.png
+            - wall1-5.png
+            - wall1-6.png
+            - wall1-7.png
+            - wall1-8.png
+            - wall1-9.png
+            - wall1-10.png
+            - wall1-11.png
+            - wall1-12.png
+            - wall1-13.png
+            - wall1-14.png
+            - wall1-15.png
   - Name: grypto
     MapCharacter: G
     Observers:

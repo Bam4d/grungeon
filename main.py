@@ -19,9 +19,9 @@ if __name__ == '__main__':
 
     env.reset()
 
-    global_recorder = VideoRecorder()
+ #   global_recorder = VideoRecorder()
     global_visualization = env.render(observer='global', mode='rgb_array')
-    global_recorder.start("global_video_test.mp4", global_visualization.shape)
+  #  global_recorder.start("global_video_test.mp4", global_visualization.shape)
 
     for i in range(10000):
 
@@ -30,9 +30,9 @@ if __name__ == '__main__':
         env.render(observer='global')
         frame = env.render(observer='global', mode='rgb_array')
 
-        global_recorder.add_frame(frame)
+   #     global_recorder.add_frame(frame)
 
         if done:
             break
 
-    global_recorder.close()
+ #   global_recorder.close()
