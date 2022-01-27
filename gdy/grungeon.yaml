@@ -100,8 +100,8 @@ Objects:
     MapCharacter: G
     Observers:
       Sprite2D:
-        - Image: grypto_up.png
         - Image: grypto_right.png
-        - Image: grypto_down.png
+        - Image: grypto_up.png
         - Image: grypto_left.png
+        - Image: grypto_down.png
 
