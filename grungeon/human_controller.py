@@ -7,10 +7,11 @@ from griddly import GymWrapperFactory, gd, GymWrapper
 # todo movement is right but the sprite rotation is wrong
 # this seem to be based on pygame's event.key
 KEYWORD_TO_KEY = {
-    (ord('d'), ): 1,
-    (ord('w'),): 2,
-    (ord('a'),): 3,
-    (ord('s'),): 4,
+    (ord('d'), ): [0, 1],
+    (ord('w'),): [0, 2],
+    (ord('a'),): [0, 3],
+    (ord('s'),): [0, 4],
+    (ord('e'),): [1, 1],
 }
 
 def callback(env):
@@ -24,6 +25,7 @@ def callback(env):
     def _callback(prev_obs, obs, action, rew, env_done, info):
 
         global_obs = env.render(observer=0, mode="rgb_array")
+        print(f"available actions = {env.game.get_available_actions(1)}")
         # recorder.add_frame(global_obs)
         if rew != 0:
             print(f'\nReward: {rew}')
@@ -50,4 +52,4 @@ if __name__ == '__main__':
     env.reset()
     global_visualization = env.render(observer='global', mode='rgb_array')
 
-    play.play(env, fps=10, keys_to_action=KEYWORD_TO_KEY, zoom=1)
+    play.play(env, callback=callback(env), fps=10, keys_to_action=KEYWORD_TO_KEY, zoom=1)

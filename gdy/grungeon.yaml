@@ -69,15 +69,36 @@ Actions:
           Object: [_empty, floor]
 
   - Name: acquire_slime
-    Behaviors:
+    InputMapping:
+      Inputs:
+        1:
+          Description: attack front
+          OrientationVector: [ 1, 0 ]
+          VectorToDest: [ 1, 0 ]
+      Relative: true
+
+    Behaviours:
       - Src:
           Object: grypto
           Commands:
             - incr: slime_inventory
-      - Dst:
-          Object: [slime_barrel]
+        Dst:
+          Object: slime_barrel
           Commands:
             - change_to: barrel
+
+  - Name: attack
+
+    Behaviours:
+      - Src:
+          Object: grypto
+          Commands:
+            - spawn: slime
+        Dst:
+          Object: barrel
+          Commands:
+            - remove: true
+
 
 
 
