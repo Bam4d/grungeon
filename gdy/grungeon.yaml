@@ -24,11 +24,11 @@ Environment:
       w/f   w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f
       w/f   f    f    f    f    f    f    f    f    f    f    e/f  e/f  e/f    w/f
       w/f   f    f    f    f    x/f  f    X/f  X/f  f    f    f    f    f    w/f
-      w/f   f    f    f    f    f    f    X/f  X/f  f    f    x/f    f    f    w/f
+      w/f   f    f    c/f    f    f    f    X/f  X/f  f    f    x/f    f    f    w/f
       w/f   f    f    f    f    f    f    f    f    f    f    f    f    f    w/f
       w/f   f    X/f  f    f    f    f    f    f    f    f    f    f    f    w/f
       w/f   f    f    f    f    f    f    f    f    f    x/f  f    f    f    w/f
-      w/f   f    f    f    f    f    f    f    f    f    f    f    f    f    w/f
+      w/f   f    f    e/f    f    f    f    f    f    f    f    f    f    f    w/f
       w/f   f    f    f    G/f  f    f    f    X/f  f    f    f    f    f    w/f
       w/f   f    f    f    f    f    f    f    f    f    f    f    f    f    w/f
       w/f   w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f  w/f
@@ -75,6 +75,22 @@ Actions:
         Dst:
           Object: [barrel, slime_barrel, wall]
 
+  - Name: move_crawler
+    InputMapping:
+      Internal: true
+      Relative: true
+    Behaviours:
+      - Src:
+          Object: crawler
+          Commands:
+            - mov: _dest
+            - exec:
+                Action: move_crawler
+                Randomize: true
+                Delay: 1
+        Dst:
+            Object: [ _empty, floor]
+
   - Name: acquire_slime
     InputMapping:
       Inputs:
@@ -101,13 +117,28 @@ Actions:
           Commands:
             - remove: true
 
-  - Name: hatch
-    Probability: 0.5
+  - Name: hatch_near
+    Probability: 0.1
     Trigger:
-      Type: RANGE_BOX_BOUNDARY
+      Type: RANGE_BOX_AREA
       Range: 2
     Behaviours:
-      - Dest:
+      - Src:
+          Object: grypto
+        Dst:
+          Object: egg
+          Commands:
+            - change_to: crawler
+
+  - Name: hatch_far
+    Probability: 0.01
+    Trigger:
+      Type: RANGE_BOX_AREA
+      Range: 20
+    Behaviours:
+      - Src:
+          Object: grypto
+        Dst:
           Object: egg
           Commands:
             - change_to: crawler
@@ -136,6 +167,10 @@ Objects:
 
   - Name: crawler
     MapCharacter: c
+    InitialActions:
+      - Action: move_crawler
+        Randomize: true
+        Delay: 1
     Observers:
       Sprite2D:
         - Image: tg_monsters_crawler_u1.png
