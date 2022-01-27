@@ -11,7 +11,7 @@ KEYWORD_TO_KEY = {
     (ord('w'),): [0, 2],
     (ord('a'),): [0, 3],
     (ord('s'),): [0, 4],
-    (ord('e'),): [1, 0],
+    (ord('e'),): [1, 1],
 }
 
 def callback(env):

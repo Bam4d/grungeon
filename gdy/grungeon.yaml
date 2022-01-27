@@ -17,8 +17,6 @@ Environment:
       InitialValue: 0
     - Name: health
       InitialValue: 100
-    - Name: direction
-      InitialValue: 0
 
 
   Levels:
@@ -67,16 +65,13 @@ Actions:
           Commands:
             - mov: _dest
             - set_tile: meta.image_idx
-            - set: [directon, image_idx]
-            - incr: direction
         Dst:
           Object: [_empty, floor]
       - Src:
           Object: grypto
           Commands:
+            - rot: _dir
             - set_tile: meta.image_idx
-            - set: [directon, image_idx]
-            - incr: direction
         Dst:
           Object: [barrel, slime_barrel, wall]
 
@@ -84,7 +79,7 @@ Actions:
     InputMapping:
       Inputs:
         1:
-          Description: slime!
+          Description: slime
           VectorToDest: [ 0, -1 ]
       Relative: true
 
