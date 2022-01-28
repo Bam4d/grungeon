@@ -42,7 +42,8 @@ if __name__ == '__main__':
     env = GymWrapper(yaml_path,
                      player_observer_type=gd.ObserverType.SPRITE_2D,
                      global_observer_type=gd.ObserverType.SPRITE_2D,
-                     image_path='../assets_/')
+                     image_path='../assets_/',
+                     shader_path='../shaders')
 
     world = Map(
         room_width=8,
