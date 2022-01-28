@@ -21,6 +21,10 @@ struct ObjectData {
   int zIdx;
 };
 
+struct GlobalVariable {
+    int value;
+};
+
 layout(std140, binding = 1) uniform EnvironmentData {
   mat4 projectionMatrix;
   mat4 viewMatrix;
@@ -38,6 +42,11 @@ layout(std430, binding = 3) readonly buffer ObjectDataBuffer {
 }
 objectDataBuffer;
 
+layout(std430, binding = 4) readonly buffer GlobalVariableBuffer {
+    GlobalVariable variables[];
+}
+globalVariableBuffer;
+
 layout(push_constant) uniform PushConsts {
   int idx;
 }
@@ -52,7 +61,22 @@ void main() {
       inFragTextureCoords.y * object.textureMultiply.y,
       object.textureIndex);
 
+    if (object.objectType == 1) { // cralwer
+        int time = globalVariableBuffer.variables[0].value;
+        float x = 0.1 * cos(time/2.0);
+        object.modelMatrix[3][1] += x;
+    }
+
+    if(object.objectType == 2) { // egg
+        int time = globalVariableBuffer.variables[0].value;
+        float x = sin(time/20.0)*0.5;
+        object.modelMatrix[0][0] += x;
+        object.modelMatrix[1][1] += x;
+    }
+
   mat4 mvp = environmentData.projectionMatrix * environmentData.viewMatrix * object.modelMatrix;
+
+
 
   gl_Position = mvp * vec4(
                           inPosition.x,

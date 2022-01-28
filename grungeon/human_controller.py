@@ -23,6 +23,8 @@ def callback(env):
 
         #print(f"available actions = {env.game.get_available_actions(1)}")
         # recorder.add_frame(global_obs)
+
+        #env.render(observer='global')
         if rew != 0:
             print(f'\nReward: {rew}')
         if env_done:

@@ -67,6 +67,7 @@ Actions:
           Object: grypto
           Commands:
             - mov: _dest
+            - rot: _dir
             - set_tile: meta.image_idx
         Dst:
           Object: [_empty, floor]
@@ -142,7 +143,7 @@ Actions:
 
 
   - Name: hatch_near
-    Probability: 0.1
+    Probability: 0.01
     Trigger:
       Type: RANGE_BOX_AREA
       Range: 2
@@ -155,7 +156,7 @@ Actions:
             - change_to: crawler
 
   - Name: hatch_far
-    Probability: 0.01
+    Probability: 0.001
     Trigger:
       Type: RANGE_BOX_AREA
       Range: 20
