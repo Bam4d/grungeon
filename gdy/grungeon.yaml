@@ -16,7 +16,9 @@ Environment:
     - Name: slime_inventory
       InitialValue: 0
     - Name: health
-      InitialValue: 100
+      InitialValue: 20
+    - Name: has_gun
+      InitialValue: 0
   Termination:
     Lose:
       - lte: [health, 0]
@@ -139,13 +141,22 @@ Actions:
           Object: crawler
           Commands:
             - remove: true
+      - Src:
+          Object: grypto
+          Preconditions:
+            - eq: [has_gun, 1]
+            - eq: [can_fire, 1]
+          Commands:
+            - exec: spawn_bullet
+        Dst:
+          Object: [ _empty, floor]
 
 
   - Name: hatch_near
-    Probability: 0.1
+    Probability: 0.05
     Trigger:
       Type: RANGE_BOX_AREA
-      Range: 2
+      Range: 3
     Behaviours:
       - Src:
           Object: grypto
@@ -155,7 +166,7 @@ Actions:
             - change_to: crawler
 
   - Name: hatch_far
-    Probability: 0.01
+    Probability: 0.005
     Trigger:
       Type: RANGE_BOX_AREA
       Range: 20
