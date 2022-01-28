@@ -6,6 +6,8 @@ from griddly import GymWrapperFactory, gd, GymWrapper
 
 # todo movement is right but the sprite rotation is wrong
 # this seem to be based on pygame's event.key
+from grungeon.map_rooms_grid import Map
+
 KEYWORD_TO_KEY = {
     (ord('d'), ): [0, 1],
     (ord('w'),): [0, 2],
@@ -16,16 +18,9 @@ KEYWORD_TO_KEY = {
 
 def callback(env):
 
-    initial_global_obs = env.render(observer=0, mode="rgb_array")
-    observation_shape = initial_global_obs.shape
-
-    # recorder = VideoRecorder()
-    # recorder.start("human_player_video_test.mp4", observation_shape)
-
     def _callback(prev_obs, obs, action, rew, env_done, info):
 
-        global_obs = env.render(observer=0, mode="rgb_array")
-        print(f"available actions = {env.game.get_available_actions(1)}")
+        #print(f"available actions = {env.game.get_available_actions(1)}")
         # recorder.add_frame(global_obs)
         if rew != 0:
             print(f'\nReward: {rew}')
@@ -39,17 +34,26 @@ def callback(env):
 
 if __name__ == '__main__':
     wrapper = GymWrapperFactory()
-    name = 'stochasticity_env'
+    name = 'grungeon_env'
     current_path = os.path.dirname(os.path.realpath(__file__))
     yaml_path = os.path.abspath('../gdy/grungeon.yaml')
 
     env = GymWrapper(yaml_path,
                      player_observer_type=gd.ObserverType.SPRITE_2D,
                      global_observer_type=gd.ObserverType.SPRITE_2D,
-                     image_path='../assets_/',
-                     level=0)
+                     image_path='../assets_/')
 
+    world = Map(
+        room_width=8,
+        room_height=8,
+        wall_width=1,
+        num_rooms_horizontal=5,
+        num_rooms_vertical=5
+    )
+    world.build()
+    level_string = world.get_map()
+
+    #env.reset(level_string=level_string)
     env.reset()
-    global_visualization = env.render(observer='global', mode='rgb_array')
 
-    play.play(env, callback=callback(env), fps=10, keys_to_action=KEYWORD_TO_KEY, zoom=1)
+    play.play(env, callback=callback(env), fps=60, keys_to_action=KEYWORD_TO_KEY, zoom=1)

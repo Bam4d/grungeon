@@ -1,39 +1,16 @@
+# This is a sample Python script.
 
-import os
+# Press Alt+Shift+X to execute it or replace it with your code.
+# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
-from griddly import GymWrapperFactory, gd, GymWrapper
-from griddly.RenderTools import VideoRecorder
 
+def print_hi(name):
+    # Use a breakpoint in the code line below to debug your script.
+    print(f'Hi, {name}')  # Press Ctrl+Shift+B to toggle the breakpoint.
+
+
+# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    wrapper = GymWrapperFactory()
+    print_hi('PyCharm')
 
-    name = 'stochasticity_env'
-
-    current_path = os.path.dirname(os.path.realpath(__file__))
-
-    env = GymWrapper('gdy/grungeon.yaml',
-                     player_observer_type=gd.ObserverType.SPRITE_2D,
-                     global_observer_type=gd.ObserverType.SPRITE_2D,
-                     image_path='./assets/',
-                     level=0)
-
-    env.reset()
-
- #   global_recorder = VideoRecorder()
-    global_visualization = env.render(observer='global', mode='rgb_array')
-  #  global_recorder.start("global_video_test.mp4", global_visualization.shape)
-
-    for i in range(10000):
-
-        obs, reward, done, info = env.step(env.action_space.sample())
-
-        env.render(observer='global')
-        env.render()
-        frame = env.render(observer='global', mode='rgb_array')
-
-   #     global_recorder.add_frame(frame)
-
-        if done:
-            break
-
- #   global_recorder.close()
+# See PyCharm help at https://www.jetbrains.com/help/pycharm/

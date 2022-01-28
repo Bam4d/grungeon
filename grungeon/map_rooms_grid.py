@@ -6,7 +6,7 @@ import numpy as np
 
 
 class Tiles(str, Enum):
-    FLOOR = '.'
+    FLOOR = 'f'
     WALL = 'w'
     PLAYER = 'P'
 
@@ -41,20 +41,20 @@ class Map:
                            dtype=np.str_)
 
         # Draw outer walls
-        self.map[0:self.wall_width, :] = f"{Tiles.WALL}"  # Top
+        self.map[0:self.wall_width, :] = f"{Tiles.WALL}/{Tiles.FLOOR}"  # Top
         self.map[(self.map_height-self.wall_width):self.map_height, :] = f"{Tiles.WALL}"  # Bottom
-        self.map[:, 0:self.wall_width] = f"{Tiles.WALL}"  # Left
+        self.map[:, 0:self.wall_width] = f"{Tiles.WALL}/{Tiles.FLOOR}"  # Left
         self.map[:, (self.map_width-self.wall_width):self.map_width] = f"{Tiles.WALL}"  # Right
 
         # Draw walls between rooms
         for i in range(1, self.num_rooms_vertical):  # Horizontal dividers
             a = i * (self.room_height - self.wall_width)
             b = a + self.wall_width
-            self.map[a:b, :] = f"{Tiles.WALL}"
+            self.map[a:b, :] = f"{Tiles.WALL}/{Tiles.FLOOR}"
         for i in range(1, self.num_rooms_horizontal):  # Vertical dividers
             a = i * (self.room_width - self.wall_width)
             b = a + self.wall_width
-            self.map[:, a:b] = f"{Tiles.WALL}"
+            self.map[:, a:b] = f"{Tiles.WALL}/{Tiles.FLOOR}"
 
         return self.map
 
