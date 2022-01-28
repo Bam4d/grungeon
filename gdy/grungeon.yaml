@@ -11,6 +11,7 @@ Environment:
       Height: 10
       Width: 10
       TrackAvatar: true
+      RotateAvatarImage: false
     AvatarObject: grypto
   Variables:
     - Name: slime_inventory
@@ -68,6 +69,8 @@ Actions:
           Commands:
             - mov: _dest
             - rot: _dir
+#            - set: [current_tile, meta.image_idx]
+#            - set_tile: current_tile
             - set_tile: meta.image_idx
         Dst:
           Object: [_empty, floor]
@@ -75,6 +78,8 @@ Actions:
           Object: grypto
           Commands:
             - rot: _dir
+#            - set: [current_tile, meta.image_idx]
+#            - set_tile: current_tile
             - set_tile: meta.image_idx
         Dst:
           Object: [barrel, slime_barrel, wall, crawler]
@@ -227,6 +232,9 @@ Objects:
             - wall1-15.png
   - Name: grypto
     Z: 2
+#    Variables:
+#      Name: current_tile
+#      InitialValue: 0
     MapCharacter: G
     Observers:
       Sprite2D:
