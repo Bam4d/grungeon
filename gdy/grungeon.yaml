@@ -17,7 +17,11 @@ Environment:
     - Name: slime_inventory
       InitialValue: 0
     - Name: health
-      InitialValue: 100
+      InitialValue: 20
+    - Name: has_gun
+      InitialValue: 1
+    - Name: can_fire
+      InitialValue: 1
   Termination:
     Lose:
       - lte: [health, 0]
@@ -108,7 +112,7 @@ Actions:
                 Randomize: true
                 Delay: 1
         Dst:
-          Object: [ wall, egg, barrel, slime_barrel, crawler ]
+          Object: [ wall, egg, barrel, slime_barrel, crawler, bullet ]
 
       - Src:
           Object: crawler
@@ -122,12 +126,42 @@ Actions:
           Commands:
             - sub: [health, 5]
 
+  - Name: move_bullet
+    InputMapping:
+      Internal: true
+    Behaviours:
+      - Src:
+          Object: bullet
+          Commands:
+            - mov: _dest
+            - exec:
+                Action: move_bullet
+                Delay: 5
+        Dst:
+          Object: [ _empty, floor]
+      - Src:
+          Object: bullet
+        Dst:
+          Object: crawler
+          Commands:
+            - remove: true
+      - Src:
+          Object: bullet
+        Dst:
+          Object: egg
+          Commands:
+            - change_to: crawler
+      - Src:
+          Object: bullet
+          Commands:
+            - remove: true
+        Dst:
+          Object: [wall, barrel, slime_barrel]
 
   - Name: interact
     InputMapping:
       Inputs:
         1:
-          Description: slime
           VectorToDest: [ 0, -1 ]
       Relative: true
     Behaviours:
@@ -145,13 +179,36 @@ Actions:
           Object: crawler
           Commands:
             - remove: true
+      - Src:
+          Object: grypto
+          Preconditions:
+            - eq: [has_gun, 1]
+            - eq: [can_fire, 1]
+          Commands:
+            - spawn: bullet
+            - set: [can_fire, 0]
+            - exec:
+                Action: reload_gun
+                Delay: 10
+        Dst:
+          Object: [ _empty, floor]
 
+  - Name: reload_gun
+    InputMapping:
+      Internal: true
+    Behaviours:
+       - Src:
+           Object: grypto
+           Commands:
+             - set: [can_fire, 1]
+         Dst:
+           Object: [wall, barrel, slime_barrel, _empty, crawler, floor]
 
   - Name: hatch_near
-    Probability: 0.01
+    Probability: 0.05
     Trigger:
       Type: RANGE_BOX_AREA
-      Range: 2
+      Range: 3
     Behaviours:
       - Src:
           Object: grypto
@@ -161,7 +218,7 @@ Actions:
             - change_to: crawler
 
   - Name: hatch_far
-    Probability: 0.001
+    Probability: 0.005
     Trigger:
       Type: RANGE_BOX_AREA
       Range: 20
@@ -206,6 +263,16 @@ Objects:
     Observers:
       Sprite2D:
         - Image: tg_monsters_crawler_u1.png
+
+  - Name: bullet
+    Z: 2
+    MapCharacter: b
+    InitialActions:
+      - Action: move_bullet
+        Delay: 1
+    Observers:
+      Sprite2D:
+        - Image: bullet.png
 
   - Name: wall
     Z: 2
