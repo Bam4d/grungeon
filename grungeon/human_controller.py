@@ -45,6 +45,8 @@ if __name__ == '__main__':
                      image_path='../assets_/',
                      shader_path='../shaders')
 
+    print(env.game.get_object_names())
+
     world = Map(
         room_width=8,
         room_height=8,
