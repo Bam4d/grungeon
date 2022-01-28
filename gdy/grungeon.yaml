@@ -17,6 +17,9 @@ Environment:
       InitialValue: 0
     - Name: health
       InitialValue: 100
+  Termination:
+    Lose:
+      - lte: [health, 0]
 
 
   Levels:
@@ -73,7 +76,7 @@ Actions:
             - rot: _dir
             - set_tile: meta.image_idx
         Dst:
-          Object: [barrel, slime_barrel, wall]
+          Object: [barrel, slime_barrel, wall, crawler]
 
   - Name: move_crawler
     InputMapping:
@@ -99,10 +102,22 @@ Actions:
                 Randomize: true
                 Delay: 1
         Dst:
-          Object: [ wall, egg, barrel, slime_barrel ]
+          Object: [ wall, egg, barrel, slime_barrel, crawler ]
+
+      - Src:
+          Object: crawler
+          Commands:
+            - exec:
+                Action: move_crawler
+                Randomize: true
+                Delay: 5
+        Dst:
+          Object: grypto
+          Commands:
+            - sub: [health, 5]
 
 
-  - Name: acquire_slime
+  - Name: interact
     InputMapping:
       Inputs:
         1:
@@ -118,15 +133,13 @@ Actions:
           Object: slime_barrel
           Commands:
             - change_to: barrel
-
-  - Name: attack
-    Behaviours:
       - Src:
           Object: grypto
         Dst:
           Object: crawler
           Commands:
             - remove: true
+
 
   - Name: hatch_near
     Probability: 0.1
