@@ -67,15 +67,20 @@ void main() {
     for (int i = 0; i < objectDataBuffer.size; i++) {
         ObjectData object = objectDataBuffer.variables[i];
 
-        if (object.objectType == 1 || object.objectType == 2 || object.objectType == 5) {
+        if (object.objectType == 5) {
             mat4 mv = environmentData.viewMatrix * object.modelMatrix;
             vec4 position = mv * vec4(0, 0, 0, 1);
             float dist_to_pixel = distance(position.xy, gl_FragCoord.xy);
-            glowLevel += 1.0/pow(dist_to_pixel / 60.0, 2.0) - 0.1;
+
+            // gaussian
+            glowLevel += max(0, exp(-pow(dist_to_pixel, 2.0) / 2000.0)-0.01);
         }
     }
 
-    glowLevel = max(0, min(0.5, glowLevel));
+    int time = globalVariableBuffer.variables[0].value;
+
+    float glowPulsate = cos(time/30.0);
+    glowLevel = max(0, min(glowPulsate, glowLevel));
 
     vec4 sprite_rgba = texture(samplerArray, inFragTextureCoords);
     vec4 glow_rgba = vec4(sprite_rgba.r, 1.0, sprite_rgba.b, sprite_rgba.a);

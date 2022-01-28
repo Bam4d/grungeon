@@ -71,6 +71,7 @@ Actions:
           Object: grypto
           Commands:
             - mov: _dest
+            - rot: _dir
             - set_tile: meta.image_idx
         Dst:
           Object: [_empty, floor]
