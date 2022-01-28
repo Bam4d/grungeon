@@ -87,9 +87,20 @@ Actions:
             - exec:
                 Action: move_crawler
                 Randomize: true
+                Delay: 5
+        Dst:
+          Object: [ _empty, floor]
+
+      - Src:
+          Object: crawler
+          Commands:
+            - exec:
+                Action: move_crawler
+                Randomize: true
                 Delay: 1
         Dst:
-            Object: [ _empty, floor]
+          Object: [ wall, egg, barrel, slime_barrel ]
+
 
   - Name: acquire_slime
     InputMapping:
@@ -160,17 +171,19 @@ Objects:
         - Image: EmptyBarrel.png
 
   - Name: egg
+    Z: 2
     MapCharacter: e
     Observers:
       Sprite2D:
         - Image: SlimeEgg.png
 
   - Name: crawler
+    Z: 2
     MapCharacter: c
     InitialActions:
       - Action: move_crawler
         Randomize: true
-        Delay: 1
+        Delay: 10
     Observers:
       Sprite2D:
         - Image: tg_monsters_crawler_u1.png
