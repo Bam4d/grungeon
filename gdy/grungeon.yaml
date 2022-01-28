@@ -14,6 +14,8 @@ Environment:
       RotateAvatarImage: false
     AvatarObject: grypto
   Variables:
+    - Name: equipped_item
+      InitialValue: 0
     - Name: slime_inventory
       InitialValue: 0
     - Name: health
@@ -73,18 +75,27 @@ Actions:
           Commands:
             - mov: _dest
             - rot: _dir
-#            - set: [current_tile, meta.image_idx]
-#            - set_tile: current_tile
-            - set_tile: meta.image_idx
+            - set: [current_tile, meta.image_idx]
+            - eq:
+                Arguments: [equipped_item, 1]
+                Commands:
+                  - add: [current_tile, 4]
+            - set_tile: current_tile
+#            - set_tile: meta.image_idx
         Dst:
           Object: [_empty, floor]
       - Src:
           Object: grypto
           Commands:
             - rot: _dir
-#            - set: [current_tile, meta.image_idx]
-#            - set_tile: current_tile
-            - set_tile: meta.image_idx
+            - set: [current_tile, meta.image_idx]
+            - eq:
+                Arguments: [ equipped_item, 1 ]
+                Commands:
+                  - add: [ current_tile, 4 ]
+                  - set_tile: current_tile
+            - set_tile: current_tile
+#            - set_tile: meta.image_idx
         Dst:
           Object: [barrel, slime_barrel, wall, crawler]
 
@@ -194,8 +205,6 @@ Actions:
           Object: [ _empty, floor]
 
   - Name: reload_gun
-    InputMapping:
-      Internal: true
     Behaviours:
        - Src:
            Object: grypto
@@ -205,6 +214,8 @@ Actions:
            Object: [wall, barrel, slime_barrel, _empty, crawler, floor]
 
   - Name: hatch_near
+    InputMapping:
+      Internal: true
     Probability: 0.05
     Trigger:
       Type: RANGE_BOX_AREA
@@ -218,6 +229,8 @@ Actions:
             - change_to: crawler
 
   - Name: hatch_far
+    InputMapping:
+      Internal: true
     Probability: 0.005
     Trigger:
       Type: RANGE_BOX_AREA
@@ -229,6 +242,19 @@ Actions:
           Object: egg
           Commands:
             - change_to: crawler
+
+  - Name: equip
+    InputMapping:
+      Inputs:
+        1:
+          VectorToDest: [0, 0]
+    Behaviours:
+      - Src:
+          Object: grypto
+          Commands:
+            - set: [equipped_item, 1]
+        Dst:
+          Object: grypto
 
 Objects:
 
@@ -299,9 +325,9 @@ Objects:
             - wall1-15.png
   - Name: grypto
     Z: 2
-#    Variables:
-#      Name: current_tile
-#      InitialValue: 0
+    Variables:
+      - Name: current_tile
+        InitialValue: 0
     MapCharacter: G
     Observers:
       Sprite2D:
@@ -309,6 +335,10 @@ Objects:
         - Image: grypto_up.png
         - Image: grypto_left.png
         - Image: grypto_down.png
+        - Image: grypto_right_sword.png
+        - Image: grypto_up_sword.png
+        - Image: grypto_left_sword.png
+        - Image: grypto_down_sword.png
 
 
   - Name: floor

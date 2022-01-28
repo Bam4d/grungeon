@@ -61,13 +61,13 @@ void main() {
       inFragTextureCoords.y * object.textureMultiply.y,
       object.textureIndex);
 
-    if (object.objectType == 1) { // cralwer
+    if (object.objectType == 2) { // cralwer
         int time = globalVariableBuffer.variables[0].value;
         float x = 0.1 * cos(time/2.0);
         object.modelMatrix[3][1] += x;
     }
 
-    if(object.objectType == 2) { // egg
+    if(object.objectType == 3) { // egg
         int time = globalVariableBuffer.variables[0].value;
         float x = sin(time/20.0)*0.5;
         object.modelMatrix[0][0] += x;
